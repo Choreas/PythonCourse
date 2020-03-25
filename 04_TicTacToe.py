@@ -1,7 +1,10 @@
+import random
 
 boardElements = ["+-------+-------+-------+","|       |       |       |"]
 fields = [[i + n for i in range(1,4)] for n in range(0,7,3)]
-print(fields)
+
+def InitBoard():
+    fields = [[i + n for i in range(1,4)] for n in range(0,7,3)]
 
 def DisplayBoard():
     for topSep in range(3):
@@ -10,31 +13,81 @@ def DisplayBoard():
             if gridSep != 1:
                 print(boardElements[1])
             else:
-                print(boardElements[1][0])             
-    print(boardElements[0])   
+                print(boardElements[1][0:4] + str(fields[topSep][0]) + boardElements[1][5:8] + boardElements[1][0:4] + str(fields[topSep][1]) + boardElements[1][5:8] + boardElements[1][0:4] + str(fields[topSep][2]) + boardElements[1][5:9])             
+    print(boardElements[0])
 
-DisplayBoard()
-##def EnterMove(board):
-###
-### the function accepts the board current status, asks the user about their move, 
-### checks the input and updates the board according to the user's decision
-###
-##
-##def MakeListOfFreeFields(board):
-###
-### the function browses the board and builds a list of all the free squares; 
-### the list consists of tuples, while each tuple is a pair of row and column numbers
-###
-##
-##def VictoryFor(board, sign):
-###
-### the function analyzes the board status in order to check if 
-### the player using 'O's or 'X's has won the game
-###
-##
-##def DrawMove(board):
-###
-### the function draws the computer's move and updates the board
-###
-##
-##
+def EnterMove(field, val):
+    if not field in range(1,10):
+        return False
+    for x in range(3):
+        if field in fields[x]:
+            fields[x][fields[x].index(field)] = val
+            return True
+    return False
+
+
+
+
+def computerTurn():
+    while True:
+        field = random.randrange(1,10)
+        if EnterMove(field, "X"):
+            break
+
+def VictoryFor(sign):
+    # Check for 3 in a row
+    for row in range(3):
+        for col in range(3):
+            if not fields[row][col] == sign:
+                break
+            if col == 2:
+                return True
+    # Check for 3 in a column
+    for col in range(3):
+        for row in range(3):
+            if not fields[row][col] == sign:
+                break
+            if row == 2:
+                return True    
+    # Check for 3 diagonally
+    for field in range(3):
+        if not fields[field][field] == sign:
+            break
+        if field == 2:
+            return True
+    for field in range(3):
+        if not fields[2 - field][field] == sign:
+            break
+        if field == 2:
+            return True
+    return False
+
+
+while True:
+    InitBoard()
+    fields[1][1] = "X"
+    for x in range(10):
+        DisplayBoard()
+        userMove = input("Field: ")
+        if not userMove.isdigit():
+            print("Invalid input.")
+            continue
+        if not EnterMove(int(userMove), "O"):
+            print("Illegal move or invalid input.")
+            continue
+        DisplayBoard()
+        if VictoryFor("O"):
+            print("You win!")
+            break
+        wait = input("Computer's turn...")
+        computerTurn()
+        DisplayBoard()
+        if VictoryFor("X"):
+            print("You loose =(")
+            break
+        if x == 9:
+            print("tie")
+            break
+    again = input("Play again? (y)")
+    if again.upper() != "Y":
+        break
