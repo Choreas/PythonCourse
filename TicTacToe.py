@@ -6,6 +6,7 @@ def _InitFields():
 
 def _DisplayBoard(fields):
     boardElements = ["+-------+-------+-------+", "|       |       |       |"]
+    fieldNums = {1:"①", 2:"②", 3:"③", 4:"④", 5:"⑤", 6:"⑥", 7:"⑦", 8:"⑧", 9:"⑨"}
     for _ in range(5):
         print("\n")
     for topSep in range(3):
@@ -16,11 +17,14 @@ def _DisplayBoard(fields):
             else:
                 fieldVals = []
                 for n in range(3):
-                    if str(fields[topSep][n]).isdigit():
-                        fieldVals.append(" ")
+                    value = fields[topSep][n]
+                    if str(value).isdigit():
+                        fieldVals.append(fieldNums.get(value))
                     else:
-                        fieldVals.append(fields[topSep][n])
-                print(boardElements[1][0:4] + str(fieldVals[0]) + boardElements[1][5:8] + boardElements[1][0:4] + str(fieldVals[1]) + boardElements[1][5:8] + boardElements[1][0:4] + str(fieldVals[2]) + boardElements[1][5:9])
+                        fieldVals.append(value)
+                print(boardElements[1][0:4] + str(fieldVals[0]) + boardElements[1][5:8] + 
+                      boardElements[1][0:4] + str(fieldVals[1]) + boardElements[1][5:8] + 
+                      boardElements[1][0:4] + str(fieldVals[2]) + boardElements[1][5:9])
     print(boardElements[0])
 
 def _EnterMove(fields, field, val):
