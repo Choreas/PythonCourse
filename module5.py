@@ -52,16 +52,45 @@ def CeasarCipher(strng, shifts):
 
 def IsPalindrome(strng):
     try:
-        strng = str(strng)
-    except:
-        return "Error: Could not parse this string."
-    strng = strng.replace(" ", "", -1).upper()
+        strng = _simplifyString(strng)
+    except Exception as e:
+        return e.args[0]
     strnglen = len(strng)
-    if not strng.isalpha():
-        return "Error: Your string must be a true Alpha."
-    if not strnglen > 1:
-        return "Error: Only one character? That's called cheating."
     for x in range(strnglen // 2):
         if not ord(strng[x]) == ord(strng[strnglen - x - 1]):
             return "Your string is no emordnilap."
     return "That is a palindrome!"
+
+def IsAnagram(sample, strng):
+    try:
+        sample = _simplifyString(sample)
+        strng = _simplifyString(strng)
+    except Exception as e:
+        return e.args[0]
+    if sample == strng:
+        return "Your strings resemble each other like an egg another."
+    strnglen = len(strng)
+    samplelen = len(sample)
+    if not strnglen == samplelen:
+        return "Mangorana"
+    sampleChars = list(sample)
+    strngChars = list(strng)
+    for char in sampleChars:
+        try:
+            idx = strngChars.remove(char)
+        except:
+            return "Mangorana"
+    return "You have an anagaram here =)"
+
+
+def _simplifyString(strng):
+    try:
+        strng = str(strng)
+    except:
+        raise Exception("Error: Could not parse this string.")
+    strng = strng.replace(" ", "", -1).upper()
+    if not strng.isalpha():
+        raise Exception("Error: Your string must be a true Alpha.")
+    if not len(strng) > 1:
+        raise Exception("Error: Only one character? That's called cheating.")
+    return strng

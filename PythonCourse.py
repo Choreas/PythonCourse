@@ -10,5 +10,8 @@ import module4, module5
 #while True:
 #    print(module5.CeasarCipher(input("Enter letters: "), input("Enter shifts: ")))
 
+#while True:
+#    print(module5.IsPalindrome(input("Check this for being a palindrome: ")))
+
 while True:
-    print(module5.IsPalindrome(input("Check this for being a palindrome: ")))
+    print(module5.IsAnagram(input("Enter first string: "), input("Enter second string: ")))
