@@ -1,3 +1,7 @@
 import module4
 
-module4.TicTacToe.play()
+while True:
+    module4.TicTacToe.Play()
+    again = input("Play again? (y/any)")
+    if again.upper() != "Y":
+        break
