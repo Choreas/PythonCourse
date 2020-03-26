@@ -20,8 +20,7 @@ def _DisplayBoard(fields):
                         fieldVals.append(" ")
                     else:
                         fieldVals.append(fields[topSep][n])
-                print(boardElements[1][0:4] + str(fieldVals[0]) + boardElements[1][5:8] + boardElements[1][0:4] + str(fieldVals[1]) + boardElements[1][5:8] + boardElements[1][0:4] + str(fieldVals[2]) + boardElements[1][5:9])             
-                #print(boardElements[1][0:4] + str(fields[topSep][0]) + boardElements[1][5:8] + boardElements[1][0:4] + str(fields[topSep][1]) + boardElements[1][5:8] + boardElements[1][0:4] + str(fields[topSep][2]) + boardElements[1][5:9])             
+                print(boardElements[1][0:4] + str(fieldVals[0]) + boardElements[1][5:8] + boardElements[1][0:4] + str(fieldVals[1]) + boardElements[1][5:8] + boardElements[1][0:4] + str(fieldVals[2]) + boardElements[1][5:9])
     print(boardElements[0])
 
 def _EnterMove(fields, field, val):
@@ -130,7 +129,6 @@ def _getFieldFromIdx(row, col):
     rowVals = {0:0, 1:3, 2:6}
     return col + rowVals.get(row)
 
-
 def _WaitForComp():
     print("Waiting for computer")
     for x in range(3):
@@ -153,16 +151,18 @@ def Play():
         if not _EnterMove(fields, int(userMove), "O"):
             print("Illegal move or invalid input.")
             continue
+        currentTurn += 1
         if _VictoryFor(fields, "O"):
             print("You win!")
             break
         _DisplayBoard(fields)
-        _WaitForComp()
+        if currentTurn < 8:
+            _WaitForComp()
         _ComputerTurn(fields)
         if _VictoryFor(fields, "X"):
             print("You loose =(")
             break
-        currentTurn += 2
+        currentTurn += 1
         _DisplayBoard(fields)
     _DisplayBoard(fields)
     print("===========FIN===========")
