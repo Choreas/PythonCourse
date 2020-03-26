@@ -6,6 +6,8 @@ def _InitFields():
 
 def _DisplayBoard(fields):
     boardElements = ["+-------+-------+-------+", "|       |       |       |"]
+    for _ in range(5):
+        print("\n")
     for topSep in range(3):
         print(boardElements[0])
         for gridSep in range(3):
@@ -33,6 +35,10 @@ def _EnterMove(fields, field, val):
 
 
 def _ComputerTurn(fields):
+    chance = _CheckForChance(fields, "X")
+    if chance > 0:
+        _EnterMove(fields, chance, "X")
+        return
     while True:
         field = randrange(1,10)
         if _EnterMove(fields, field, "X"):
@@ -66,6 +72,61 @@ def _VictoryFor(fields, sign):
             return True
     return False
 
+def _CheckForChance(fields, sign):
+    chanceFld = 0
+    # Check for 3 in a row
+    for row in range(3):
+        signCount = 0
+        for col in range(3):
+            if fields[row][col] == sign:
+                signCount += 1
+            elif not fields[row][col] == sign and not str(fields[row][col]).isdigit():
+                break
+            if str(fields[row][col]).isdigit():
+                chanceFld = col
+            if col == 2 and signCount == 2:
+                return _getFieldFromIdx(row, chanceFld)
+    # Check for 3 in a column
+    for col in range(3):
+        signCount = 0
+        for row in range(3):
+            if fields[row][col] == sign:
+                signCount += 1
+            elif not fields[row][col] == sign and not str(fields[row][col]).isdigit():
+                break
+            if str(fields[row][col]).isdigit():
+                chanceFld = row
+            if row == 2 and signCount == 2:
+                return _getFieldFromIdx(chanceFld, col)   
+    # Check for 3 diagonally
+    signCount = 0
+    for field in range(3):        
+        if fields[field][field] == sign:
+            signCount += 1
+        elif not fields[field][field] == sign and not str(fields[field][field]).isdigit():
+            break
+        if str(fields[field][field]).isdigit():
+            chanceFld = field
+        if field == 2 and signCount == 2:
+            return _getFieldFromIdx(chanceFld, chanceFld)
+    signCount = 0
+    for field in range(3):
+        if fields[2 - field][field] == sign:
+            signCount += 1
+        elif not fields[2 - field][field] == sign and not str(fields[2 - field][field]).isdigit():
+            break
+        if str(fields[2 - field][field]).isdigit():
+            chanceFld = field
+        if field == 2 and signCount == 2:
+            return _getFieldFromIdx(2 - chanceFld, chanceFld)
+    return 0
+
+def _getFieldFromIdx(row, col):
+    col += 1
+    rowVals = {0:0, 1:3, 2:6}
+    return col + rowVals.get(row)
+
+
 def _WaitForComp():
     print("Waiting for computer")
     for x in range(3):
@@ -78,6 +139,9 @@ def Play():
     currentTurn = 1
     _DisplayBoard(fields)
     while currentTurn <= 9:
+        if currentTurn >= 9:
+            print("\n\n\n===Tie===")
+            break
         userMove = input("Choose your field (1-9): ")
         if not userMove.isdigit():
             print("Invalid input.")
@@ -88,15 +152,13 @@ def Play():
         if _VictoryFor(fields, "O"):
             print("You win!")
             break
+        _DisplayBoard(fields)
         _WaitForComp()
         _ComputerTurn(fields)
         if _VictoryFor(fields, "X"):
             print("You loose =(")
             break
-        if currentTurn == 9:
-            print("tie")
-            break
-        currentTurn += 1
+        currentTurn += 2
         _DisplayBoard(fields)
     _DisplayBoard(fields)
     print("===========FIN===========")
