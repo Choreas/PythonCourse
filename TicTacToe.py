@@ -39,6 +39,10 @@ def _ComputerTurn(fields):
     if chance > 0:
         _EnterMove(fields, chance, "X")
         return
+    humanChance = _CheckForChance(fields, "O")
+    if humanChance > 0:
+        _EnterMove(fields, humanChance, "X")
+        return
     while True:
         field = randrange(1,10)
         if _EnterMove(fields, field, "X"):
