@@ -28,3 +28,24 @@ def _ParseLed(num):
 def LedDisplay():
     num = input("Enter a positve integer for LED display: ")
     return _ParseLed(num)
+
+def CeasarCipher(strng, shifts):
+    try:
+        shifts = int(shifts)
+    except:
+        return "Error: second parameter must be integer."
+    shifts = shifts % 26
+    if shifts == 0:
+        return strng
+    res = ""
+    for code in strng.encode('ascii'):
+        if code >= 65 and code <= 90:
+            code += shifts
+            if code > 90:
+                code = 65 + (code - 90) - 1
+        elif code >= 97 and code <= 122:
+            code += shifts
+            if code > 122:
+                code = 97 + (code - 122) - 1
+        res += chr(code)
+    return res

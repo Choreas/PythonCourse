@@ -6,4 +6,6 @@ import module4, module5
 #    if again.upper() != "Y":
 #        break
 
-print(module5.LedDisplay())
+strng = ""
+while True:
+    print(module5.CeasarCipher(input("Enter letters: "), input("Enter shifts: ")))
