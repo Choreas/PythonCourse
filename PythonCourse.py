@@ -6,6 +6,9 @@ import module4, module5
 #    if again.upper() != "Y":
 #        break
 
-strng = ""
+#strng = ""
+#while True:
+#    print(module5.CeasarCipher(input("Enter letters: "), input("Enter shifts: ")))
+
 while True:
-    print(module5.CeasarCipher(input("Enter letters: "), input("Enter shifts: ")))
+    print(module5.IsPalindrome(input("Check this for being a palindrome: ")))

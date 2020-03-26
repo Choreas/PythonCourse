@@ -49,3 +49,19 @@ def CeasarCipher(strng, shifts):
                 code = 97 + (code - 122) - 1
         res += chr(code)
     return res
+
+def IsPalindrome(strng):
+    try:
+        strng = str(strng)
+    except:
+        return "Error: Could not parse this string."
+    strng = strng.replace(" ", "", -1).upper()
+    strnglen = len(strng)
+    if not strng.isalpha():
+        return "Error: Your string must be a true Alpha."
+    if not strnglen > 1:
+        return "Error: Only one character? That's called cheating."
+    for x in range(strnglen // 2):
+        if not ord(strng[x]) == ord(strng[strnglen - x - 1]):
+            return "Your string is no emordnilap."
+    return "That is a palindrome!"
