@@ -91,7 +91,7 @@ def _simplifyString(strng):
         raise Exception("Error: Could not parse this string.")
     strng = strng.replace(" ", "", -1).upper()
     if not strng.isalpha():
-        raise Exception("Error: Your string must be a true Alpha.")
+        raise Exception("Error: Your string must be alpha.")
     if not len(strng) > 1:
         raise Exception("Error: Only one character? That's called cheating.")
     return strng
