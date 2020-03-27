@@ -16,8 +16,7 @@ def _DisplayBoard(fields):
                 print(boardElements[1])
             else:
                 fieldVals = []
-                for n in range(3):
-                    value = fields[topSep][n]
+                for value in fields[topSep]:
                     if str(value).isdigit():
                         fieldVals.append(fieldNums.get(value))
                     else:
