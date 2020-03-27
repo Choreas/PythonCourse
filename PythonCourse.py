@@ -1,25 +1,96 @@
-import module4, module5
+import module4, module5, argparse
 
-#while True:
-#    module4.TicTacToe.Play()
-#    again = input("Play again? (y/any)")
-#    if again.upper() != "Y":
-#        break
+cmds = {"-ana":"Run Anagram Checker", "-ci":"Run ciphertext", "-help":"Show help", "-pal":"Run Palindrome Checker", 
+        "-sud":"Check a solution for a sudoku", "-ttt":"Play Tic-Tac-Toe"}
+print("-help for help =)")
+def Server():
+    inp = input("PythonCourse: ")
+    try:
+        inp = str(inp)
+    except:
+        return ""
+    if inp.upper() == "EXIT":
+        return 666
+    if not inp in cmds.keys():
+        return ""
+    return inp
 
-#while True:
-#    print(module5.CeasarCipher(input("Enter letters: "), input("Enter shifts: ")))
+def _PrintHelp():
+    cmdList = cmds.items()
+    print("\n\n===help===")
+    for item in cmdList:
+        print((item[0] + ": " + item[1]))
+    print("\n\n")
 
-#while True:
-#    print(module5.IsPalindrome(input("Check this for being a palindrome: ")))
+def _ttt_():
+    while True:
+        module4.TicTacToe.Play()
+        again = input("Play again? (y/any)")
+        if again.upper() != "Y":
+            break
 
-#while True:
-#    print(module5.IsAnagram(input("Enter first string: "), input("Enter second string: ")))
+def _cipher_():
+    while True:
+        txt = input("Enter text: ")
+        if txt.upper() == "EXIT":
+            break
+        shifts = input("Enter shifts: ")
+        if shifts.upper() == "EXIT":
+            break
+        print(module5.CeasarCipher(txt, shifts))
 
+def _pal_():
+    while True:
+        arg = input("Check this for being a palindrome: ")
+        if arg.upper() == "EXIT":
+            break
+        print(module5.IsPalindrome(arg))
+
+def _ana_():
+    while True:
+        arg1 = input("Enter first string: ")
+        if arg1.upper() == "EXIT":
+            break
+        arg2 = input("Enter second string: ")
+        if arg2.upper() == "EXIT":
+            break
+        print(module5.IsAnagram(arg1, arg2))
+
+def _sud_():
+    while True:
+        arg = input("Enter solution string: ")
+        if arg.upper() == "EXIT":
+            break
+        print(module5.Sudoku.CheckSolution(arg))
+
+while True:
+    choice = Server()
+    if choice == "":
+        print("Could not recognize your command. Type -help for help.")
+        continue
+    if choice == 666:
+        break
+    if choice == "-help":
+        _PrintHelp()
+        continue
+    elif choice == "-ana":
+        _ana_()
+        continue
+    elif choice == "-pal":
+        _pal_()
+        continue
+    elif choice == "-ttt":
+        _ttt_()
+        continue
+    elif choice == "-sud":
+        _sud_()
+        continue
+    elif choice == "-ci":
+        _cipher_()
+        continue
 #Sudoku
 #Testcases
 #False
 #195743862431865927876192543387459216612387495549216738763524189928671354254938671
 #True
 #295743861431865927876192543387459216612387495549216738763524189928671354154938672
-#while True:
-#    print(module5.Sudoku.CheckSolution(input("Enter solution string: ")))

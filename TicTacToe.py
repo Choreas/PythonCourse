@@ -148,6 +148,8 @@ def Play():
             print("\n\n\n===Tie===")
             break
         userMove = input("Choose your field (1-9): ")
+        if userMove.upper() == "EXIT":
+            break
         if not userMove.isdigit():
             print("Invalid input.")
             continue
