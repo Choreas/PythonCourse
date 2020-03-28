@@ -31,7 +31,10 @@ def _DisplayBoard(fieldsList):
             if (colN + 1) % 3 == 0:
                 if not colN + 1 == 9:
                     verSep = boardElements[4]
-            vertLine += boardElements[5]*boardWidth + fields[boardPart*9 + colN] + boardElements[5]*boardWidth + verSep
+            field = fields[boardPart*9 + colN]
+            if field == "0":
+                field = " "
+            vertLine += boardElements[5]*boardWidth + field + boardElements[5]*boardWidth + verSep
         print(vertLine)
 
         horSep = boardElements[1]
