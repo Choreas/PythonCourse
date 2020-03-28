@@ -8,11 +8,11 @@ def _Server():
         return ""
     return inp.lower()
 
-def _DisplayBoard(fields):
+def _DisplayBoard(fieldsList):
     try:
-        fields = _validateFields_(fields)
+        fields = _validateFields_(fieldsList)
     except Exception as e:
-        print("Internal error")
+        print("Internal error " + e.args[0])
         return e.args[0]
     boardElements = ["+", "-", "=", "|", "‖", " "]
     gridNums = {1:"①", 2:"②", 3:"③", 4:"④", 5:"⑤", 6:"⑥", 7:"⑦", 8:"⑧", 9:"⑨"}
@@ -43,9 +43,9 @@ def _DisplayBoard(fields):
             horLine += horSep*(boardWidth*2) + horSep + boardElements[0]
         print(horLine)
 
-def CheckSolution(fields):
+def CheckSolution(fieldsList):
     try:
-        fields = _validateFields_(fields)
+        fields = _validateFields_(fieldsList)
     except Exception as e:
         return e.args[0]
     if fields.count("0") > 0:
@@ -76,9 +76,10 @@ def _Wrong(row, col, grid, val, source):
             str(col + 1) + "\nGrid: " + str(grid + 1) + "\nValue: " + str(val) +
             "\nSource: " + source)
 
-def _validateFields_(fields):
+def _validateFields_(fieldsList):
+    fields = ""
     try:
-        fields = str(fields)
+        fields = fields.join(fieldsList)
     except:
         raise Exception("Error: Could not parse solution to string.")
     fields = fields.replace(" ", "", -1)
@@ -125,7 +126,8 @@ def _executeMove_(fields, fixed, move):
     return fields
 
 def Play():    
-    fields = fixed =  "300601005002000400100000020000408010600000007070905000090000000008000500200109006"
+    fixed =  "300601005002000400100000020000408010600000007070905000090000000008000500200109006"
+    fields = list(fixed)
     _DisplayBoard(fields)
     while True:
         inp = _Server()
