@@ -3,7 +3,7 @@ import module4, module5
 cmds = {"ana":"Run Anagram Checker", "ci":"Run ciphertext", "exit":"Exit to menu from everywhere, or kill program from menu", 
         "help":"Show help", "led":"Parse a number as LED digits", "pal":"Run Palindrome Checker", 
         "sud":"Check a solution for a sudoku", "ttt":"Play Tic-Tac-Toe", "-test":"test"}
-print("-help for help =)")
+print("help for help =)")
 
 def Server():
     inp = input("PythonCourse: ")
