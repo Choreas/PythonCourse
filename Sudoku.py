@@ -150,9 +150,6 @@ def Play():
             continue
         if inp == "check":
             status = CheckSolution(fields)
-            if status == "Correct":
-                print(status)
-                break
             print(status)
             continue
         try:
