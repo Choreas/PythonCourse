@@ -1,7 +1,8 @@
-import module4, module5, argparse
+import module4, module5
 
-cmds = {"-ana":"Run Anagram Checker", "-ci":"Run ciphertext", "exit":"Exit to menu from everywhere, or kill program from menu", "-help":"Show help", "-pal":"Run Palindrome Checker", 
-        "-sud":"Check a solution for a sudoku", "-ttt":"Play Tic-Tac-Toe", "-test":"test"}
+cmds = {"ana":"Run Anagram Checker", "ci":"Run ciphertext", "exit":"Exit to menu from everywhere, or kill program from menu", 
+        "help":"Show help", "led":"Parse a number as LED digits", "pal":"Run Palindrome Checker", 
+        "sud":"Check a solution for a sudoku", "ttt":"Play Tic-Tac-Toe", "-test":"test"}
 print("-help for help =)")
 
 def Server():
@@ -13,6 +14,32 @@ def Server():
     if not inp in cmds.keys():
         return ""
     return inp
+
+def _PrintArgsHelp_(cmd):
+    print("\n==help==\n")
+    if cmd == "led":
+        cmdList = [["led (this program)", "Follow instructions for this program"], ["help", "Show help"], ["exit", "Exit to menu"]]
+    else:
+        cmdList = [["this program", "Follow instructions for this program"], ["help", "Show help"], ["exit", "Exit to menu"]]
+    for item in cmdList:
+        print((item[0] + ": " + item[1]))
+    print("\n")
+
+def _argServer_(cmd, prompts):
+    args = []
+    for idx, prompt in enumerate(prompts):
+        repeat = True
+        while repeat:
+            repeat = False
+            arg = input(prompt).lower()
+            if arg == "help":
+                repeat = True
+                _PrintArgsHelp_(cmd)
+                continue
+            if arg == "exit":
+                raise Exception("exit")
+            args.append(arg)
+    return args
 
 def _PrintHelp():
     cmdList = cmds.items()
@@ -30,40 +57,51 @@ def _ttt_():
 
 def _cipher_():
     while True:
-        txt = input("Enter text: ")
-        if txt.upper() == "EXIT":
-            break
-        shifts = input("Enter shifts: ")
-        if shifts.upper() == "EXIT":
-            break
-        print(module5.CeasarCipher(txt, shifts))
+        try:
+            args = _argServer_("ci", ["Enter text: ", "Enter shifts: "])
+        except:
+            print("\n")
+            break     
+        print(module5.CeasarCipher(args[0], args[1]))
 
 def _pal_():
     while True:
-        arg = input("Check this for being a palindrome: ")
-        if arg.upper() == "EXIT":
-            break
-        print(module5.IsPalindrome(arg))
+        try:
+            args = _argServer_("pal", ["Check this for being a palindrome: "])
+        except:
+            print("\n")
+            break 
+        print(module5.IsPalindrome(args[0]))
+
+def _led_():
+    while True:
+        try:
+            args = _argServer_("led", ["Enter number for led display: "])
+        except:
+            print("\n")
+            break      
+        print(module5.LedDisplay(args[0]))
 
 def _ana_():
     while True:
-        arg1 = input("Enter first string: ")
-        if arg1.upper() == "EXIT":
-            break
-        arg2 = input("Enter second string: ")
-        if arg2.upper() == "EXIT":
-            break
-        print(module5.IsAnagram(arg1, arg2))
+        try:
+            args = _argServer_("ana", ["Enter first string: ", "Enter second string: "])
+        except:
+            print("\n")
+            break 
+        print(module5.IsAnagram(args[0], args[1]))
 
 def _sud_():
     module5.Sudoku.Play()
 
 def _test_():
     while True:
-        arg = input("Enter string: ")
-        if arg.upper() == "EXIT":
-            break
-        module5.Sudoku._DisplayBoard(arg)
+        try:
+            args = _argServer_("test", ["Enter string"])
+        except:
+            print("\n")
+            break 
+        module5.Sudoku._DisplayBoard(args[0])
 
 while True:
     choice = Server()
@@ -75,27 +113,24 @@ while True:
     if choice == "-test":
         _test_()
         continue
-    if choice == "-help":
+    if choice == "help":
         _PrintHelp()
         continue
-    elif choice == "-ana":
+    elif choice == "ana":
         _ana_()
         continue
-    elif choice == "-pal":
+    elif choice == "pal":
         _pal_()
         continue
-    elif choice == "-ttt":
+    elif choice == "ttt":
         _ttt_()
         continue
-    elif choice == "-sud":
+    elif choice == "sud":
         _sud_()
         continue
-    elif choice == "-ci":
+    elif choice == "ci":
         _cipher_()
         continue
-#Sudoku
-#Testcases
-#False
-#195743862431865927876192543387459216612387495549216738763524189928671354254938671
-#True
-#295743861431865927876192543387459216612387495549216738763524189928671354154938672
+    elif choice == "led":
+        _led_()
+        continue
