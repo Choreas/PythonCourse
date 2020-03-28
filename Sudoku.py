@@ -3,10 +3,10 @@ cmds = {"check":"Check your solution", "exit":"Exit to menu. NOTE: no saving", "
 
 def _Server():
     inp = input("Sudoku: ")
-    inp = inp.replace(" ", "", -1)
+    inp = inp.replace(" ", "", -1).lower()
     if not inp in cmds.keys() and not inp.isdigit():
         return ""
-    return inp.lower()
+    return inp
 
 def _DisplayBoard(fieldsList):
     try:

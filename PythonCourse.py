@@ -7,12 +7,12 @@ print("-help for help =)")
 def Server():
     inp = input("PythonCourse: ")
     try:
-        inp = str(inp)
+        inp = str(inp).replace(" ", "", -1).lower()
     except:
         return ""
     if not inp in cmds.keys():
         return ""
-    return inp.lower()
+    return inp
 
 def _PrintHelp():
     cmdList = cmds.items()
