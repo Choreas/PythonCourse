@@ -35,7 +35,6 @@ def _EnterMove(fields, field, val):
             return True
     return False
 
-
 def _ComputerTurn(fields):
     chance = _CheckForChance(fields, "X")
     if chance > 0:
@@ -170,5 +169,4 @@ def Play():
         currentTurn += 1
         _DisplayBoard(fields)
     _DisplayBoard(fields)
-    print("===========FIN===========")
-        
+    print("===========FIN===========")  
