@@ -27,8 +27,7 @@ def _ParseLed(num):
         led += " \n"
     return led
 
-def LedDisplay():
-    num = input("Enter a positve integer for LED display: ")
+def LedDisplay(num):
     return _ParseLed(num)
 
 def CeasarCipher(strng, shifts):
