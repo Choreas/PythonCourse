@@ -1,12 +1,11 @@
 import factory
 
-cmds = {"check":"Check your solution", "exit":"Exit to menu. NOTE: no saving", 
-        "help":"Show help", "load":"Load a new sudoku", 
+cmds = {"check":"Check your solution", "exit":"Exit to menu.", 
+        "help":"Show help", "reset":"Reset state of current game",
+        "select":"Select a new sudoku", 
         "save":"Save your progress", 
         "show":"Show board", 
         "[input]":"Row + Column + Value (format: 123)"}
-
-sudokuLibrary = factory.sudokuTemplate("sudokuTemplates")
 
 def _Server():
     inp = input("Sudoku: ")
@@ -15,7 +14,7 @@ def _Server():
         return ""
     return inp
 
-def _DisplayBoard(fieldsList):
+def _DisplayBoard(fieldsList, sudNo):
     try:
         fields = _validateFields_(fieldsList)
     except Exception as e:
@@ -24,8 +23,9 @@ def _DisplayBoard(fieldsList):
     boardElements = ["+", "-", "=", "|", "‖", " "]
     gridNums = {1:"①", 2:"②", 3:"③", 4:"④", 5:"⑤", 6:"⑥", 7:"⑦", 8:"⑧", 9:"⑨"}
     boardWidth = 2
-    for _ in range(5):
+    for _ in range(4):
         print("\n")
+    print(" #" + sudNo)
     topLine = " " + boardElements[0]
     for linePart in range(9):
         topLine += boardElements[1]*boardWidth + gridNums.get(linePart + 1) + boardElements[1]*boardWidth + boardElements[0]
@@ -135,10 +135,18 @@ def _executeMove_(fields, fixed, move):
     fields[(row-1)*9 + (col-1)] = move[2]
     return fields
 
-def Play():    
-    fixed =  "300601005002000400100000020000408010600000007070905000090000000008000500200109006"
-    fields = list(fixed)
-    _DisplayBoard(fields)
+def Play():   
+    sudokuLibrary = factory.sudokuTemplate("sudokuTemplates")
+    saveState = factory.sudokuSavestate()   
+    sudNo = str(int(saveState.recentSud) + 1)
+    fixed = sudokuLibrary.GetSudoku(sudNo)
+    try:
+        fields = list(saveState.GetState(sudNo))
+        print("Load successful for saved game")
+    except:
+        print("fail")
+        fields = list(fixed)
+    _DisplayBoard(fields, sudNo)
     while True:
         inp = _Server()
         if inp == "":
@@ -148,10 +156,21 @@ def Play():
             _PrintHelp()
             continue
         if inp == "show":
-            _DisplayBoard(fields)
+            _DisplayBoard(fields, sudNo)
+            continue
+        if inp == "reset":
+            ex = input("Are you sure about resetting your current progress? (y/any): ")
+            if ex.upper() == "Y":
+                fields = list(fixed)
+                _DisplayBoard(fields, sudNo)
             continue
         if inp == "exit":
-            ex = input("Progress isn't saved. Are you sure? (y/any): ")
+            try:
+                saveState.SaveState(sudNo, _validateFields_(fields))
+                print("Feel calm, your progress has been saved.\n")
+            except:
+                print("Your progress was NOT saved!\n")
+            ex = input("Make sure your progress was saved. Quit now? (y/any): ")
             if ex.upper() == "Y":
                 break
             continue
@@ -159,19 +178,36 @@ def Play():
             status = CheckSolution(fields)
             print(status)
             continue
-        if inp == "load":
+        if inp == "save":
+            try:
+                saveState.SaveState(sudNo, _validateFields_(fields))
+                print("Progress saved.\n")
+            except:
+                print("Saving failed!\n")
+            continue
+        if inp == "select":
+            try:
+                saveState.SaveState(sudNo, _validateFields_(fields))
+                print("Feel calm, your progress has been saved.")
+            except:
+                print("Your progress was not saved!\n")
             print("There are " + str(sudokuLibrary.count) + " sudokus available.")
             choice = input("Which one do you want?: ")
             try:
                 fixed = sudokuLibrary.GetSudoku(choice)
-                fields = list(fixed)
-                _DisplayBoard(fields)
+                sudNo = choice
+                try:
+                    fields = list(saveState.GetState(sudNo))
+                    print("Load successful for saved game")
+                except:
+                    fields = list(fixed)
+                _DisplayBoard(fields, sudNo)
             except Exception as e:
                 print(e.args[0])
             continue
         try:
             fields = _executeMove_(fields, fixed, inp)
-            _DisplayBoard(fields)
+            _DisplayBoard(fields, sudNo)
         except Exception as e:
             print(e.args[0])
             continue
