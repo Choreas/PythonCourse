@@ -1,5 +1,7 @@
 import factory
 
+# Provides a basic cli for parsing operations from factory module.
+
 cmds = {"csv":"Operate on a csv file", "exit":"Exit to menu", 
         "help":"Show help", "json":"Operate on a json file"}
 

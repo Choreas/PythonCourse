@@ -1,5 +1,7 @@
 import Sudoku
 
+# The list contains each layer for each digit from top to bottom and consists of true and false values for
+# turned on resp. turned off leds.
 def _ParseLed(num):
     leds = [{1:[False, False, True], 2:[True, True, True], 3:[True, True, True], 4:[True, False, True], 5:[True, True, True], 6:[True, True, True], 7:[True, True, True], 8:[True, True, True], 9:[True, True, True], 0:[True, True, True]},
             {1:[False, False, True], 2:[False, False, True], 3:[False, False, True], 4:[True, False, True], 5:[True, False, False], 6:[True, False, False], 7:[False, False, True], 8:[True, False, True], 9:[True, False, True], 0:[True, False, True]},
@@ -27,9 +29,12 @@ def _ParseLed(num):
         led += " \n"
     return led
 
+# Interface function for LED digit parser.
+# Might be useless and could as well be part of the main function.
 def LedDisplay(num):
     return _ParseLed(num)
 
+# Uses codepage values (ascii) to add to single characters.
 def CeasarCipher(strng, shifts):
     try:
         shifts = int(shifts)
@@ -51,6 +56,8 @@ def CeasarCipher(strng, shifts):
         res += chr(code)
     return res
 
+# Uses ord() to compare characters from start resp. end of two strings until the center is reached
+# to find palindromes.
 def IsPalindrome(strng):
     try:
         strng = _simplifyString(strng)
@@ -62,6 +69,8 @@ def IsPalindrome(strng):
             return "Your string is no emordnilap."
     return "That is a palindrome!"
 
+# Checks if two strings are anagrams by popping characters (removing them one by one and catching the exception
+# for a character not being available).
 def IsAnagram(sample, strng):
     try:
         sample = _simplifyString(sample)
@@ -83,6 +92,8 @@ def IsAnagram(sample, strng):
             return "Mangorana"
     return "You have an anagaram here =)"
 
+# Makes sure parameter is string, else makes it string.
+# Sets it to lowercase and makes sure there are only characters and its length is > 1.
 def _simplifyString(strng):
     try:
         strng = str(strng)

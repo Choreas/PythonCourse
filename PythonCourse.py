@@ -1,10 +1,16 @@
 import module4, module5, parsing
 
+# This is the entry point into all programs. 
+# It uses a simple cli (command line interface) which can only be used from inside the running program.
+# The current approach is still pretty procedural, though some programs are partly class based.
+
+# These are the available commands for the cli.
 cmds = {"ana":"Run Anagram Checker", "ci":"Run ciphertext", "exit":"Exit to menu from everywhere, or kill program from menu", 
         "help":"Show help", "led":"Parse a number as LED digits", "pal":"Run Palindrome Checker", 
         "sud":"Check a solution for a sudoku", "ttt":"Play Tic-Tac-Toe", "-test":"test", "-factory":"Run file factory"}
 print("help for help =)")
 
+# This function centralizes command prompts.
 def Server():
     inp = input("PythonCourse: ")
     try:
@@ -15,6 +21,7 @@ def Server():
         return ""
     return inp
 
+# This should print command specific help.
 def _PrintArgsHelp_(cmd):
     print("\n==help==\n")
     if cmd == "led":
@@ -25,6 +32,7 @@ def _PrintArgsHelp_(cmd):
         print((item[0] + ": " + item[1]))
     print("\n")
 
+# Just like server, this centralizes command prompts, but argument specific.
 def _argServer_(cmd, prompts):
     args = []
     for idx, prompt in enumerate(prompts):
@@ -41,6 +49,7 @@ def _argServer_(cmd, prompts):
             args.append(arg)
     return args
 
+# Prints general help for cli commands.
 def _PrintHelp():
     cmdList = cmds.items()
     print("\n\n==help==\n")
@@ -48,6 +57,7 @@ def _PrintHelp():
         print((item[0] + ": " + item[1]))
     print("\n\n")
 
+# TicTacToe
 def _ttt_():
     while True:
         module4.TicTacToe.Play()
@@ -55,6 +65,7 @@ def _ttt_():
         if again.upper() != "Y":
             break
 
+# Ceasar's Cipher (ROT)
 def _cipher_():
     while True:
         try:
@@ -64,6 +75,7 @@ def _cipher_():
             break     
         print(module5.CeasarCipher(args[0], args[1]))
 
+# Palindrome checker.
 def _pal_():
     while True:
         try:
@@ -73,6 +85,7 @@ def _pal_():
             break 
         print(module5.IsPalindrome(args[0]))
 
+# LED digit parser.
 def _led_():
     while True:
         try:
@@ -82,6 +95,7 @@ def _led_():
             break      
         print(module5.LedDisplay(args[0]))
 
+# Anagram checker.
 def _ana_():
     while True:
         try:
@@ -91,6 +105,7 @@ def _ana_():
             break 
         print(module5.IsAnagram(args[0], args[1]))
 
+# Sudoku.
 def _sud_():
     try:
         module5.Sudoku.Play()
@@ -104,6 +119,7 @@ def _test_():
     #csv.Readcsv()
     return
 
+# Interface for parsing unit.
 def _factory_():
     parsing.Init()
 
