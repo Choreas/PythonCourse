@@ -340,3 +340,4 @@ ASALocalRun/
 healthchecksdb
 *.sln
 *.pyproj
+/data/savestates.json
