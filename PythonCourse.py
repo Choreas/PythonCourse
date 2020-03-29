@@ -92,7 +92,12 @@ def _ana_():
         print(module5.IsAnagram(args[0], args[1]))
 
 def _sud_():
-    module5.Sudoku.Play()
+    try:
+        module5.Sudoku.Play()
+    except Exception as e:
+        print(e)
+        print("\n")
+        return
 
 def _test_():
     #csv = factory.csvfactory("sudokus")
