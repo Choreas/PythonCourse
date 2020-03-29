@@ -1,5 +1,12 @@
-cmds = {"check":"Check your solution", "exit":"Exit to menu. NOTE: no saving", "help":"Show help", "show":"Show board", 
+import factory
+
+cmds = {"check":"Check your solution", "exit":"Exit to menu. NOTE: no saving", 
+        "help":"Show help", "load":"Load a new sudoku", 
+        "save":"Save your progress", 
+        "show":"Show board", 
         "[input]":"Row + Column + Value (format: 123)"}
+
+sudokuLibrary = factory.sudokuTemplate("sudokuTemplates")
 
 def _Server():
     inp = input("Sudoku: ")
@@ -151,6 +158,16 @@ def Play():
         if inp == "check":
             status = CheckSolution(fields)
             print(status)
+            continue
+        if inp == "load":
+            print("There are " + str(sudokuLibrary.count) + " sudokus available.")
+            choice = input("Which one do you want?: ")
+            try:
+                fixed = sudokuLibrary.GetSudoku(choice)
+                fields = list(fixed)
+                _DisplayBoard(fields)
+            except Exception as e:
+                print(e.args[0])
             continue
         try:
             fields = _executeMove_(fields, fixed, inp)
