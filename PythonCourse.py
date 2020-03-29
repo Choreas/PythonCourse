@@ -1,8 +1,8 @@
-import module4, module5
+import module4, module5, parsing
 
 cmds = {"ana":"Run Anagram Checker", "ci":"Run ciphertext", "exit":"Exit to menu from everywhere, or kill program from menu", 
         "help":"Show help", "led":"Parse a number as LED digits", "pal":"Run Palindrome Checker", 
-        "sud":"Check a solution for a sudoku", "ttt":"Play Tic-Tac-Toe", "-test":"test"}
+        "sud":"Check a solution for a sudoku", "ttt":"Play Tic-Tac-Toe", "-test":"test", "-factory":"Run file factory"}
 print("help for help =)")
 
 def Server():
@@ -95,13 +95,12 @@ def _sud_():
     module5.Sudoku.Play()
 
 def _test_():
-    while True:
-        try:
-            args = _argServer_("test", ["Enter string"])
-        except:
-            print("\n")
-            break 
-        module5.Sudoku._DisplayBoard(args[0])
+    #csv = factory.csvfactory("sudokus")
+    #csv.Readcsv()
+    return
+
+def _factory_():
+    parsing.Init()
 
 while True:
     choice = Server()
@@ -133,4 +132,7 @@ while True:
         continue
     elif choice == "led":
         _led_()
+        continue
+    elif choice == "-factory":
+        _factory_()
         continue
