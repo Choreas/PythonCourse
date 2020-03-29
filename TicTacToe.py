@@ -139,7 +139,8 @@ def _WaitForComp():
 
 def Play():    
     fields = _InitFields()
-    fields[1][1] = "X"
+    #fields[1][1] = "X"
+    _ComputerTurn(fields)
     currentTurn = 1
     _DisplayBoard(fields)
     while currentTurn <= 9:
