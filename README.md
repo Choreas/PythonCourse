@@ -16,5 +16,5 @@ thus work from home)* / figuring-out-what-to-do-and-must-decide-by-myself-when-t
       - Share your repository
 
 3. The code of honor forbids you to take any look at commit timestamps and frequency.
-4. Netflix shows are hot garbage.
+4. **Netflix shows are hot garbage.**
 5. Stay healthy and be a good friend to yourself, because you might be spending some time with them over the next weeks.
