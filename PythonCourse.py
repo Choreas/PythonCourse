@@ -126,7 +126,7 @@ def _factory_():
 while True:
     choice = Server()
     if choice == "":
-        print("Could not recognize your command. Type -help for help.")
+        print("Could not recognize your command. Type help for help.")
         continue
     if choice == "exit":
         break
