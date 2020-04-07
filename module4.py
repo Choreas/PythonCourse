@@ -1,7 +1,6 @@
 import TicTacToe
 
 # 4.1.3.6 LAB: A leap year: writing your own functions
-
 def isYearLeap(year):
     if year % 4 == 0:
         if year % 100 == 0:

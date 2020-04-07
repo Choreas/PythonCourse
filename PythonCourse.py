@@ -1,14 +1,21 @@
-import module4, module5, module3
+import module3, module4, module5, parsing
 
+# This is the entry point into all programs. 
+# It uses a simple cli (command line interface) which can only be used from inside the running program.
+# The current approach is still pretty procedural, though some programs are partly class based.
+
+# These are the available commands for the cli.
 cmds = {"ana":"Run Anagram Checker", "ci":"Run ciphertext", "exit":"Exit to menu from everywhere, or kill program from menu", 
         "help":"Show help", "led":"Parse a number as LED digits", "pal":"Run Palindrome Checker", 
-        "sud":"Check a solution for a sudoku", "ttt":"Play Tic-Tac-Toe", "3.1.2.11": "LAB: the Pretty Vowel Eater", "3.1.2.14":"LAB: Essentials of the while loop", 
+        "sud":"Play Sudoku", "ttt":"Play Tic-Tac-Toe", "3.1.2.11":"LAB: the Pretty Vowel Eater", "3.1.2.14":"LAB: Essentials of the while loop", 
         "3.1.2.15":"LAB: Collatz's hypothesis", "3.1.4.6":"LAB: The basics of lists", "3.1.4.13":"LAB: The basics of lists - the Beatles",
        "3.1.6.9":"LAB: Operating with lists - basics", "4.1.3.6":"LAB: A leap year: writing your own functions",
       "4.1.3.7":"LAB: How many days: writing and using your own functions", "4.1.3.8":"LAB: Day of the year: writing and using your own functions",
-     "4.1.3.9":"LAB: Prime numbers - how to find them", "-test":"test"}
+     "4.1.3.9":"LAB: Prime numbers - how to find them", "-factory":"Run file factory", "-test":"test"}
+
 print("help for help =)")
 
+# This function centralizes command prompts.
 def Server():
     inp = input("PythonCourse: ")
     try:
@@ -19,6 +26,7 @@ def Server():
         return ""
     return inp
 
+# This should print command specific help.
 def _PrintArgsHelp_(cmd):
     print("\n==help==\n")
     if cmd == "led":
@@ -29,6 +37,7 @@ def _PrintArgsHelp_(cmd):
         print((item[0] + ": " + item[1]))
     print("\n")
 
+# Just like server, this centralizes command prompts, but argument specific.
 def _argServer_(cmd, prompts):
     args = []
     for idx, prompt in enumerate(prompts):
@@ -45,6 +54,7 @@ def _argServer_(cmd, prompts):
             args.append(arg)
     return args
 
+# Prints general help for cli commands.
 def _PrintHelp():
     cmdList = cmds.items()
     print("\n\n==help==\n")
@@ -52,6 +62,7 @@ def _PrintHelp():
         print((item[0] + ": " + item[1]))
     print("\n\n")
 
+# TicTacToe
 def _ttt_():
     while True:
         module4.TicTacToe.Play()
@@ -59,6 +70,7 @@ def _ttt_():
         if again.upper() != "Y":
             break
 
+# Ceasar's Cipher (ROT)
 def _cipher_():
     while True:
         try:
@@ -68,6 +80,7 @@ def _cipher_():
             break     
         print(module5.CeasarCipher(args[0], args[1]))
 
+# Palindrome checker.
 def _pal_():
     while True:
         try:
@@ -77,6 +90,7 @@ def _pal_():
             break 
         print(module5.IsPalindrome(args[0]))
 
+# LED digit parser.
 def _led_():
     while True:
         try:
@@ -86,6 +100,7 @@ def _led_():
             break      
         print(module5.LedDisplay(args[0]))
 
+# Anagram checker.
 def _ana_():
     while True:
         try:
@@ -95,22 +110,28 @@ def _ana_():
             break 
         print(module5.IsAnagram(args[0], args[1]))
 
+# Sudoku.
 def _sud_():
-    module5.Sudoku.Play()
+    try:
+        module5.Sudoku.Play()
+    except Exception as e:
+        print(e)
+        print("\n")
+        return
 
 def _test_():
-    while True:
-        try:
-            args = _argServer_("test", ["Enter string"])
-        except:
-            print("\n")
-            break 
-        module5.Sudoku._DisplayBoard(args[0])
+    #csv = factory.csvfactory("sudokus")
+    #csv.Readcsv()
+    return
+
+# Interface for parsing unit.
+def _factory_():
+    parsing.Init()
 
 while True:
     choice = Server()
     if choice == "":
-        print("Could not recognize your command. Type -help for help.")
+        print("Could not recognize your command. Type help for help.")
         continue
     if choice == "exit":
         break
@@ -167,4 +188,7 @@ while True:
         continue
     elif choice == "4.1.3.9":
         module4.TestisPrime()
+        continue
+    elif choice == "-factory":
+        _factory_()
         continue
