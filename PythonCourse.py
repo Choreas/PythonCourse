@@ -1,4 +1,4 @@
-import module4, module5, parsing
+import module3, module4, module5, parsing
 
 # This is the entry point into all programs. 
 # It uses a simple cli (command line interface) which can only be used from inside the running program.
@@ -7,7 +7,12 @@ import module4, module5, parsing
 # These are the available commands for the cli.
 cmds = {"ana":"Run Anagram Checker", "ci":"Run ciphertext", "exit":"Exit to menu from everywhere, or kill program from menu", 
         "help":"Show help", "led":"Parse a number as LED digits", "pal":"Run Palindrome Checker", 
-        "sud":"Play Sudoku", "ttt":"Play Tic-Tac-Toe", "-test":"test", "-factory":"Run file factory"}
+        "sud":"Play Sudoku", "ttt":"Play Tic-Tac-Toe", "3.1.2.11":"LAB: the Pretty Vowel Eater", "3.1.2.14":"LAB: Essentials of the while loop", 
+        "3.1.2.15":"LAB: Collatz's hypothesis", "3.1.4.6":"LAB: The basics of lists", "3.1.4.13":"LAB: The basics of lists - the Beatles",
+       "3.1.6.9":"LAB: Operating with lists - basics", "4.1.3.6":"LAB: A leap year: writing your own functions",
+      "4.1.3.7":"LAB: How many days: writing and using your own functions", "4.1.3.8":"LAB: Day of the year: writing and using your own functions",
+     "4.1.3.9":"LAB: Prime numbers - how to find them", "-factory":"Run file factory", "-test":"test"}
+
 print("help for help =)")
 
 # This function centralizes command prompts.
@@ -153,6 +158,36 @@ while True:
         continue
     elif choice == "led":
         _led_()
+        continue
+    elif choice == "3.1.2.11":
+        module3.VowelEate()
+        continue
+    elif choice == "3.1.2.14":
+        module3.EssentialsWhile()
+        continue
+    elif choice == "3.1.2.15":
+        module3.Collarz()
+        continue
+    elif choice == "3.1.4.6":
+        module3.BasicsOfList()
+        continue
+    elif choice == "3.1.4.13":
+        module3.TheBeatles()
+        continue
+    elif choice == "3.1.6.9":
+        module3.OpertingWithLists()
+        continue
+    elif choice == "4.1.3.6":
+        module4.TestisYearLeap()
+        continue
+    elif choice == "4.1.3.7":
+        module4.TestDaysMonth()
+        continue
+    elif choice == "4.1.3.8":
+        module4.dayOfYear()
+        continue
+    elif choice == "4.1.3.9":
+        module4.TestisPrime()
         continue
     elif choice == "-factory":
         _factory_()
